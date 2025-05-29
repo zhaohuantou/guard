@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>跳转中...</title>
+  <style>
+    body { display: flex; justify-content: center; align-items: center; height:100vh; margin:0; font-family:sans-serif; background:#f7f7f7; }
+    .box { text-align: center; background:white; padding:40px; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.05); }
+    .tip { margin-top:20px; color:#888; font-size:14px; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>正在为您智能跳转，请稍等...</h2>
+    <div class="tip">赵欢投 ｜ 防封入口系统</div>
+  </div>
+  <script>
+    const channels = [
+      'https://zhaohuantou.github.io/huoma/',
+      'https://guard-blush.vercel.app/'
+    ];
+    (async () => {
+      for (let url of channels) {
+        try {
+          await fetch(url, {method:'HEAD', mode:'no-cors'});
+          location.href = url;
+          return;
+        } catch(e) {}
+      }
+      // 如果都失败，展示本页二维码
+      const day = new Date().getDate();
+      const idx = (day % 7) || 7;
+      document.body.innerHTML = '<h2>二维码展示页</h2><img src="qrcodes/code'+idx+'.jpg" alt="二维码" style="width:200px;height:200px;">';
+    })();
+  </script>
+</body>
+</html>
